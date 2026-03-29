@@ -3,122 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - 找不到頁面 | Janu</title>
+    <title>404 - 探索之境 | Janu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap');
 
         :root {
-            --janu-bg: #F9F7F2;      
-            --janu-dark: #1A1A1A;    
-            --janu-accent: #8C7E6D;  
+            --janu-dark: #0a0907;      /* 石材深色 */
+            --janu-gold: #c5a47e;      /* 燈光暖金 */
+            --janu-mural: #2a241c;     /* 壁畫底色 */
+            --janu-green: #4ade80;     /* 盆栽綠意 */
         }
 
         body {
-            background-color: var(--janu-bg);
-            color: var(--janu-dark);
+            background-color: var(--janu-dark);
+            color: #ffffff;
             font-family: 'Inter', sans-serif;
+            margin: 0;
             overflow: hidden;
+            height: 100vh;
         }
 
-        .serif {
+        /* 模擬照片中的壁畫背光效果 */
+        .mural-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70vh;
+            background: linear-gradient(to bottom, rgba(42, 36, 28, 0.8), rgba(10, 9, 7, 1)),
+                        url('https://www.transparenttextures.com/patterns/canvas-orange.png');
+            background-color: var(--janu-mural);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        /* 模擬照片中的樹影 (使用 SVG) */
+        .tree-silhouette {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.15;
+            filter: blur(1px);
+            pointer-events: none;
+        }
+
+        /* 石材基座 (底座) */
+        .stone-pedestal {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 25vh;
+            background: #111;
+            clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+            box-shadow: 0 -20px 50px rgba(0,0,0,0.8);
+            z-index: 3;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* 盆栽圖標 (CSS 繪製) */
+        .bonsai {
+            position: absolute;
+            top: -60px;
+            width: 80px;
+            height: 80px;
+            transition: transform 0.5s ease;
+        }
+
+        .bonsai:hover {
+            transform: scale(1.1);
+        }
+
+        /* 字體樣式 */
+        .janu-logo {
+            font-size: clamp(3rem, 10vw, 6rem);
+            letter-spacing: 0.4em;
+            font-weight: 200;
+            opacity: 0.9;
+            text-indent: 0.4em;
+            margin-bottom: 1rem;
+        }
+
+        .error-message {
             font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.2rem;
+            letter-spacing: 0.1em;
+            opacity: 0.6;
         }
 
-        /* 漸變進入動畫 */
-        .fade-in {
-            animation: fadeIn 1.5s ease-out forwards;
+        /* 動畫 */
+        .fade-up {
+            animation: fadeUp 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 按鈕懸停效果 */
-        .btn-janu {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid var(--janu-dark);
-        }
-
-        .btn-janu:hover {
-            background-color: var(--janu-dark);
-            color: white;
-        }
-
-        /* 裝飾線條 */
-        .line-decor {
-            width: 1px;
-            height: 100px;
-            background: linear-gradient(to bottom, transparent, var(--janu-accent), transparent);
+        /* 滑鼠發光效果 */
+        #glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(197, 164, 126, 0.05) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none;
+            z-index: 2;
+            transform: translate(-50%, -50%);
         }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen">
+<body class="flex flex-col items-center justify-center">
 
-    <!-- 背景裝飾元素 -->
-    <div class="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20">
-        <div class="absolute top-10 left-10 text-[20vw] font-bold serif select-none text-gray-300">404</div>
+    <div id="glow"></div>
+
+    <!-- 背景壁畫區 -->
+    <div class="mural-container">
+        <!-- 樹木剪影裝飾 -->
+        <svg class="tree-silhouette" viewBox="0 0 800 400" preserveAspectRatio="none">
+            <path d="M100 400 Q150 200 200 400 T300 400 T450 400 T600 400 T750 400" fill="none" stroke="currentColor" stroke-width="1" />
+            <circle cx="200" cy="150" r="100" fill="currentColor" opacity="0.1"/>
+            <circle cx="600" cy="180" r="120" fill="currentColor" opacity="0.1"/>
+        </svg>
+
+        <div class="text-center z-10 fade-up">
+            <div class="janu-logo">JANU</div>
+            <div class="error-message">404 — 寧靜之境，路徑暫失</div>
+        </div>
     </div>
 
-    <main class="relative z-10 text-center px-6">
-        <!-- 品牌識別 (簡約 Logo 佔位) -->
-        <div class="mb-12 fade-in" style="animation-delay: 0.2s;">
-            <svg class="mx-auto w-24 h-auto" viewBox="0 0 100 30" fill="currentColor">
-                <text x="50%" y="20" text-anchor="middle" class="serif text-2xl tracking-[0.3em]">JANU</text>
+    <!-- 石材基座區 -->
+    <div class="stone-pedestal">
+        <!-- 盆栽抽象圖形 -->
+        <div class="bonsai">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M40 80 C40 70 60 70 60 80" stroke="#333" stroke-width="2"/>
+                <path d="M50 75 L50 60 L40 50" stroke="#333" stroke-width="3"/>
+                <circle cx="40" cy="45" r="15" fill="#2d5a27" opacity="0.8"/>
+                <circle cx="60" cy="55" r="12" fill="#3d7a35" opacity="0.8"/>
+                <circle cx="50" cy="35" r="10" fill="#1e3d1a" opacity="0.8"/>
             </svg>
         </div>
-
-        <!-- 垂直裝飾線 -->
-        <div class="line-decor mx-auto mb-12 fade-in" style="animation-delay: 0.4s;"></div>
-
-        <!-- 主要訊息 -->
-        <h1 class="serif text-4xl md:text-6xl mb-6 italic fade-in" style="animation-delay: 0.6s;">
-            尋路之旅，暫告一段落
-        </h1>
         
-        <p class="text-sm md:text-base tracking-widest uppercase mb-12 opacity-70 fade-in" style="animation-delay: 0.8s;">
-            您所尋找的頁面似乎隱藏在寧靜之中
-        </p>
-
-        <!-- 功能按鈕 -->
-        <div class="flex flex-col md:flex-row gap-6 justify-center items-center fade-in" style="animation-delay: 1s;">
-            <a href="/" class="btn-janu px-10 py-4 text-xs tracking-widest uppercase">
-                回到首頁
+        <div class="mt-16 flex flex-col items-center gap-6">
+            <a href="/" class="px-8 py-3 border border-stone-700 text-[10px] tracking-[0.3em] uppercase hover:bg-white hover:text-black transition-all duration-500">
+                重返首頁
             </a>
-            <button onclick="window.history.back()" class="text-xs tracking-widest uppercase underline underline-offset-8 hover:opacity-50 transition-opacity">
-                返回上一頁
+            <button onclick="window.history.back()" class="text-[10px] tracking-[0.2em] opacity-40 hover:opacity-100 transition-opacity">
+                返回
             </button>
         </div>
-    </main>
+    </div>
 
-    <!-- 底部版權/裝飾 -->
-    <footer class="absolute bottom-10 w-full text-center fade-in" style="animation-delay: 1.2s;">
-        <p class="text-[10px] tracking-[0.2em] opacity-40 uppercase">
-            © 2024 Janu Hotels & Resorts. All Rights Reserved.
+    <!-- 底部資訊 -->
+    <footer class="absolute bottom-6 w-full text-center z-20">
+        <p class="text-[9px] tracking-[0.4em] opacity-30 uppercase font-light">
+            Soulful exploration awaits.
         </p>
     </footer>
 
     <script>
-        // Javascript: 增加一點動態互動感
+        // JavaScript: 處理互動效果
+        
+        const glow = document.getElementById('glow');
+        const logo = document.querySelector('.janu-logo');
+
         document.addEventListener('mousemove', (e) => {
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-            
-            // 讓背景的 404 字樣隨滑鼠輕微移動 (視差效果)
-            const bgText = document.querySelector('.select-none');
-            if (bgText) {
-                const moveX = (x - 0.5) * 30;
-                const moveY = (y - 0.5) * 30;
-                bgText.style.transform = `translate(${moveX}px, ${moveY}px)`;
-            }
+            // 1. 光暈跟隨
+            const x = e.clientX;
+            const y = e.clientY;
+            glow.style.left = x + 'px';
+            glow.style.top = y + 'px';
+
+            // 2. Logo 微視差效果
+            const moveX = (x - window.innerWidth / 2) / 50;
+            const moveY = (y - window.innerHeight / 2) / 50;
+            logo.style.transform = `translate(${moveX}px, ${moveY}px)`;
         });
 
-        // 模擬載入後的優雅顯示
+        // 模擬光線微動 (Breathing light)
+        let opacity = 0.6;
+        let growing = true;
+        
+        function animateLight() {
+            const mural = document.querySelector('.mural-container');
+            if (growing) {
+                opacity += 0.002;
+                if (opacity >= 0.8) growing = false;
+            } else {
+                opacity -= 0.002;
+                if (opacity <= 0.5) growing = true;
+            }
+            mural.style.background = `linear-gradient(to bottom, rgba(42, 36, 28, ${opacity}), rgba(10, 9, 7, 1)), url('https://www.transparenttextures.com/patterns/canvas-orange.png')`;
+            requestAnimationFrame(animateLight);
+        }
+
         window.onload = () => {
-            console.log("Janu 404 Page Loaded - Soulful exploration continues.");
+            animateLight();
+            console.log("Janu: 空間美學已加載。");
         };
     </script>
 </body>
