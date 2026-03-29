@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - 找不到頁面 | Janu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400&display=swap');
+
+        :root {
+            --janu-bg: #F9F7F2;      
+            --janu-dark: #1A1A1A;    
+            --janu-accent: #8C7E6D;  
+        }
+
+        body {
+            background-color: var(--janu-bg);
+            color: var(--janu-dark);
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* 漸變進入動畫 */
+        .fade-in {
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 按鈕懸停效果 */
+        .btn-janu {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--janu-dark);
+        }
+
+        .btn-janu:hover {
+            background-color: var(--janu-dark);
+            color: white;
+        }
+
+        /* 裝飾線條 */
+        .line-decor {
+            width: 1px;
+            height: 100px;
+            background: linear-gradient(to bottom, transparent, var(--janu-accent), transparent);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+
+    <!-- 背景裝飾元素 -->
+    <div class="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20">
+        <div class="absolute top-10 left-10 text-[20vw] font-bold serif select-none text-gray-300">404</div>
+    </div>
+
+    <main class="relative z-10 text-center px-6">
+        <!-- 品牌識別 (簡約 Logo 佔位) -->
+        <div class="mb-12 fade-in" style="animation-delay: 0.2s;">
+            <svg class="mx-auto w-24 h-auto" viewBox="0 0 100 30" fill="currentColor">
+                <text x="50%" y="20" text-anchor="middle" class="serif text-2xl tracking-[0.3em]">JANU</text>
+            </svg>
+        </div>
+
+        <!-- 垂直裝飾線 -->
+        <div class="line-decor mx-auto mb-12 fade-in" style="animation-delay: 0.4s;"></div>
+
+        <!-- 主要訊息 -->
+        <h1 class="serif text-4xl md:text-6xl mb-6 italic fade-in" style="animation-delay: 0.6s;">
+            尋路之旅，暫告一段落
+        </h1>
+        
+        <p class="text-sm md:text-base tracking-widest uppercase mb-12 opacity-70 fade-in" style="animation-delay: 0.8s;">
+            您所尋找的頁面似乎隱藏在寧靜之中
+        </p>
+
+        <!-- 功能按鈕 -->
+        <div class="flex flex-col md:flex-row gap-6 justify-center items-center fade-in" style="animation-delay: 1s;">
+            <a href="/" class="btn-janu px-10 py-4 text-xs tracking-widest uppercase">
+                回到首頁
+            </a>
+            <button onclick="window.history.back()" class="text-xs tracking-widest uppercase underline underline-offset-8 hover:opacity-50 transition-opacity">
+                返回上一頁
+            </button>
+        </div>
+    </main>
+
+    <!-- 底部版權/裝飾 -->
+    <footer class="absolute bottom-10 w-full text-center fade-in" style="animation-delay: 1.2s;">
+        <p class="text-[10px] tracking-[0.2em] opacity-40 uppercase">
+            © 2024 Janu Hotels & Resorts. All Rights Reserved.
+        </p>
+    </footer>
+
+    <script>
+        // Javascript: 增加一點動態互動感
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            // 讓背景的 404 字樣隨滑鼠輕微移動 (視差效果)
+            const bgText = document.querySelector('.select-none');
+            if (bgText) {
+                const moveX = (x - 0.5) * 30;
+                const moveY = (y - 0.5) * 30;
+                bgText.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            }
+        });
+
+        // 模擬載入後的優雅顯示
+        window.onload = () => {
+            console.log("Janu 404 Page Loaded - Soulful exploration continues.");
+        };
+    </script>
+</body>
+</html>
