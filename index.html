@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - 探索之境 | Janu</title>
+    <title>404 - 探索之境 | Janu Tokyo</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <style>
+        /* CSS 部分：負責裝潢與動畫 */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap');
 
         :root {
-            --janu-bg: #F9F7F2;        /* 明亮米色背景 */
-            --janu-text: #2D2926;      /* 深炭灰文字 */
-            --janu-mural-light: #E8E2D9; /* 淺沙色壁畫基底 */
-            --janu-accent: #C5A47E;    /* 暖金細節 */
-            --janu-blue: #003153;      /* 普魯士深藍色 */
+            --janu-bg: #F9F7F2;        /* 品牌米色背景 */
+            --janu-blue: #003153;      /* 你要求的深藍色標題 */
+            --janu-text: #2D2926;      /* 一般文字炭灰色 */
+            --janu-accent: #C5A47E;    /* 暖金裝飾色 */
         }
 
         body {
@@ -21,19 +23,19 @@
             color: var(--janu-text);
             font-family: 'Inter', sans-serif;
             margin: 0;
-            overflow: hidden;
+            overflow: hidden; /* 防止出現捲軸，保持畫面純淨 */
             height: 100vh;
-            user-select: none;
+            user-select: none; /* 防止使用者選取文字，增加應用程式感 */
         }
 
-        /* 強化層次感的自然意象壁畫容器 */
+        /* 藝術壁畫區容器 */
         .mural-container {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 80vh;
-            /* 回歸自然：霧氣森林意象 */
+            /* 背景結合了：漸層遮罩 + 自然森林圖片 */
             background-image: 
                 linear-gradient(to bottom, rgba(249, 247, 242, 0.2), var(--janu-bg)),
                 url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2000&q=80');
@@ -43,10 +45,10 @@
             align-items: center;
             justify-content: center;
             z-index: 1;
-            filter: contrast(0.9) sepia(0.1) brightness(1.05);
+            transition: background-color 0.5s ease; /* 讓 JS 改變背景色時平滑過渡 */
         }
 
-        /* 畫布質感疊加 */
+        /* 畫布紋理效果 */
         .mural-container::before {
             content: "";
             position: absolute;
@@ -57,19 +59,7 @@
             mix-blend-mode: multiply;
         }
 
-        /* 微妙的都會剪影 (東京鐵塔線條) */
-        .tower-line {
-            position: absolute;
-            bottom: 20%;
-            right: 10%;
-            height: 40%;
-            width: 1px;
-            background: linear-gradient(to top, var(--janu-accent), transparent);
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
-        /* 石材基座 */
+        /* 石材基座：使用 CSS 裁切路徑製作梯形 */
         .stone-pedestal {
             position: absolute;
             bottom: 0;
@@ -87,14 +77,14 @@
             box-shadow: 0 -20px 60px rgba(0,0,0,0.03);
         }
 
-        /* 水波紋樣式 */
+        /* 水波紋動畫樣式 */
         .ripple-effect {
             position: fixed;
             border-radius: 50%;
             transform: translate(-50%, -50%);
             pointer-events: none;
-            background-color: var(--janu-blue); /* 水波紋同步改為藍色系以維持和諧 */
-            z-index: 5;
+            background-color: var(--janu-blue); /* 波紋使用深藍色 */
+            z-index: 10;
             animation: ripple-animation 1.5s cubic-bezier(0, 0, 0.1, 1) forwards;
         }
 
@@ -103,28 +93,7 @@
             to { width: 500px; height: 500px; opacity: 0; }
         }
 
-        /* 字體與標題 */
-        .janu-logo {
-            font-size: clamp(3.5rem, 10vw, 5.5rem);
-            letter-spacing: 0.45em;
-            font-weight: 200;
-            opacity: 0.9;
-            text-indent: 0.45em;
-            margin-bottom: 2rem;
-            color: var(--janu-text);
-            text-shadow: 0 5px 25px rgba(255,255,255,0.4);
-        }
-
-        /* 修改後的深藍色文字 */
-        .error-message {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 1.6rem;
-            letter-spacing: 0.2em;
-            opacity: 1;
-            color: var(--janu-blue);
-        }
-
+        /* 進場淡入動畫 */
         .fade-up {
             animation: fadeUp 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
@@ -134,6 +103,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* 跟隨滑鼠的微光 */
         #glow {
             position: fixed;
             width: 1000px;
@@ -145,27 +115,26 @@
         }
     </style>
 </head>
-<body class="flex flex-col items-center justify-center">
+<body>
 
     <div id="glow"></div>
 
-    <!-- 背景自然壁畫區 -->
-    <div class="mural-container" id="mural">
-        <div class="tower-line"></div>
-        
+    <main class="mural-container" id="mural">
         <div class="text-center z-10 fade-up px-6">
-            <div class="janu-logo">JANU</div>
-            <div class="error-message mb-12">404 — 路徑暫失</div>
+            <div class="janu-logo text-[3.5rem] md:text-[5.5rem] tracking-[0.45em] font-[200] mb-8">JANU</div>
             
-            <p class="text-[16px] md:text-2xl tracking-[0.2em] leading-relaxed max-w-3xl mx-auto opacity-50 font-light uppercase">
+            <div class="error-message text-[1.6rem] tracking-[0.2em] italic mb-12" style="color: var(--janu-blue); font-family: 'Playfair Display', serif;">
+                404 — 路徑暫失
+            </div>
+            
+            <p class="text-[16px] md:text-2xl tracking-[0.25em] leading-relaxed max-w-3xl mx-auto opacity-50 font-light uppercase">
                 本網站目前處於維護狀態，相關人員正進行緊急維護，<br class="hidden md:block">
                 將於不久後重新開放，造成您的不變深感抱歉
             </p>
         </div>
-    </div>
+    </main>
 
-    <!-- 石材基座區 -->
-    <div class="stone-pedestal">
+    <nav class="stone-pedestal">
         <div class="flex flex-col items-center gap-10">
             <a href="/" class="px-14 py-4 border border-stone-300 text-[11px] tracking-[0.5em] uppercase hover:bg-stone-800 hover:text-white transition-all duration-1000 shadow-sm">
                 重返首頁
@@ -174,68 +143,66 @@
                 BACK
             </button>
         </div>
-    </div>
+    </nav>
 
-    <!-- 頁尾 -->
     <footer class="absolute bottom-10 w-full text-center z-20">
-        <p class="text-[11px] tracking-[0.7em] opacity-30 uppercase font-light">
-            Where Life & Soul Align
-        </p>
+        <p class="text-[11px] tracking-[0.7em] opacity-30 uppercase font-light">Where Life & Soul Align</p>
     </footer>
 
     <script>
         const glow = document.getElementById('glow');
-        const logo = document.querySelector('.janu-logo');
         const mural = document.getElementById('mural');
-
-        // 互動效果：光暈與背景微視差
+        
+        // 1. 滑鼠移動互動 (光暈與背景視差)
         document.addEventListener('mousemove', (e) => {
             const x = e.clientX;
             const y = e.clientY;
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-
-            // 1. 光暈跟隨
+            
+            // 讓光暈跟隨滑鼠
             glow.style.left = x + 'px';
             glow.style.top = y + 'px';
 
-            // 2. Logo 微位移
-            logo.style.transform = `translate(${(x - centerX) / 80}px, ${(y - centerY) / 80}px)`;
-
-            // 3. 背景圖片微位移
-            const moveX = (x - centerX) / 120;
-            const moveY = (y - centerY) / 120;
+            // 計算背景視差：讓背景隨滑鼠微幅位移
+            const moveX = (x - window.innerWidth / 2) / 120;
+            const moveY = (y - window.innerHeight / 2) / 120;
             mural.style.backgroundPosition = `calc(50% + ${moveX}px) calc(40% + ${moveY}px)`;
         });
 
-        // 點擊水波紋效果
+        // 2. 點擊產生水波紋
         document.addEventListener('click', (e) => {
             const ripple = document.createElement('div');
             ripple.className = 'ripple-effect';
             ripple.style.left = `${e.clientX}px`;
             ripple.style.top = `${e.clientY}px`;
             document.body.appendChild(ripple);
-            setTimeout(() => ripple.remove(), 1500);
+            
+            // 1.5 秒後移除波紋元素，節省效能
+            setTimeout(() => { ripple.remove(); }, 1500);
         });
 
-        // 呼吸光影效果
-        let lightVal = 0.35;
-        let grow = true;
+        // 3. 環境呼吸燈動畫：自動改變背景透明度
+        let lightVal = 0.35; // 起始亮度
+        let growing = true;  // 狀態開關
+        
         function animateAmbient() {
-            if (grow) {
+            // 邏輯：在 0.25 到 0.5 之間循環
+            if (growing) {
                 lightVal += 0.001;
-                if (lightVal >= 0.5) grow = false;
+                if (lightVal >= 0.5) growing = false;
             } else {
                 lightVal -= 0.001;
-                if (lightVal <= 0.25) grow = true;
+                if (lightVal <= 0.25) growing = true;
             }
+            
+            // 套用數值到背景色 (RGBA 模式，最後一碼是透明度)
             mural.style.backgroundColor = `rgba(232, 226, 217, ${lightVal})`;
+            
+            // 請求下一幀動畫，產生無窮循環
             requestAnimationFrame(animateAmbient);
         }
 
-        window.onload = () => {
-            animateAmbient();
-        };
+        // 當網頁完全載入後開始執行呼吸動畫
+        window.onload = animateAmbient;
     </script>
 </body>
 </html>
