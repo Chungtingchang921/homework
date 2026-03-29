@@ -6,13 +6,14 @@
     <title>404 - 探索之境 | Janu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap');
 
         :root {
             --janu-bg: #F9F7F2;        /* 明亮米色背景 */
             --janu-text: #2D2926;      /* 深炭灰文字 */
-            --janu-mural-light: #E8E2D9; /* 淺沙色壁畫 */
+            --janu-mural-light: #E8E2D9; /* 淺沙色壁畫基底 */
             --janu-accent: #C5A47E;    /* 暖金細節 */
+            --janu-blue: #003153;      /* 普魯士深藍色 */
         }
 
         body {
@@ -25,21 +26,24 @@
             user-select: none;
         }
 
-        /* 強化層次感的壁畫容器 */
+        /* 強化層次感的自然意象壁畫容器 */
         .mural-container {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 80vh;
-            background: 
-                radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.4) 0%, transparent 60%),
-                linear-gradient(to bottom, rgba(232, 226, 217, 0.3), var(--janu-bg));
-            background-color: var(--janu-mural-light);
+            /* 回歸自然：霧氣森林意象 */
+            background-image: 
+                linear-gradient(to bottom, rgba(249, 247, 242, 0.2), var(--janu-bg)),
+                url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center 40%;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1;
+            filter: contrast(0.9) sepia(0.1) brightness(1.05);
         }
 
         /* 畫布質感疊加 */
@@ -50,23 +54,22 @@
             background-image: url('https://www.transparenttextures.com/patterns/canvas-orange.png');
             opacity: 0.15;
             pointer-events: none;
+            mix-blend-mode: multiply;
         }
 
-        /* 多層樹影 */
-        .tree-layer {
+        /* 微妙的都會剪影 (東京鐵塔線條) */
+        .tower-line {
             position: absolute;
-            width: 120%;
-            height: 100%;
+            bottom: 20%;
+            right: 10%;
+            height: 40%;
+            width: 1px;
+            background: linear-gradient(to top, var(--janu-accent), transparent);
+            opacity: 0.3;
             pointer-events: none;
-            color: var(--janu-accent);
-            transition: transform 0.2s ease-out;
         }
 
-        .tree-back { opacity: 0.05; filter: blur(6px); transform: scale(1.1); }
-        .tree-mid { opacity: 0.12; filter: blur(3px); transform: scale(1.05); }
-        .tree-front { opacity: 0.18; filter: blur(1px); }
-
-        /* 石材基座：增加受光面與質感 */
+        /* 石材基座 */
         .stone-pedestal {
             position: absolute;
             bottom: 0;
@@ -79,22 +82,9 @@
             z-index: 3;
             display: flex;
             justify-content: center;
+            align-items: center;
             border-top: 1px solid rgba(255, 255, 255, 0.5);
             box-shadow: 0 -20px 60px rgba(0,0,0,0.03);
-        }
-
-        /* 盆栽互動 */
-        .bonsai {
-            position: absolute;
-            top: -70px;
-            width: 100px;
-            height: 100px;
-            transition: transform 0.8s cubic-bezier(0.2, 1, 0.2, 1);
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
-        }
-
-        .bonsai:hover {
-            transform: scale(1.08) translateY(-8px);
         }
 
         /* 水波紋樣式 */
@@ -103,37 +93,38 @@
             border-radius: 50%;
             transform: translate(-50%, -50%);
             pointer-events: none;
-            background-color: var(--janu-accent);
+            background-color: var(--janu-blue); /* 水波紋同步改為藍色系以維持和諧 */
             z-index: 5;
             animation: ripple-animation 1.5s cubic-bezier(0, 0, 0.1, 1) forwards;
         }
 
         @keyframes ripple-animation {
-            from { width: 0px; height: 0px; opacity: 0.35; }
+            from { width: 0px; height: 0px; opacity: 0.25; }
             to { width: 500px; height: 500px; opacity: 0; }
         }
 
-        /* 標題與 Logo 樣式 */
+        /* 字體與標題 */
         .janu-logo {
-            font-size: clamp(3rem, 10vw, 5.5rem);
+            font-size: clamp(3.5rem, 10vw, 5.5rem);
             letter-spacing: 0.45em;
             font-weight: 200;
             opacity: 0.9;
             text-indent: 0.45em;
             margin-bottom: 2rem;
             color: var(--janu-text);
-            text-shadow: 0 5px 15px rgba(0,0,0,0.02);
+            text-shadow: 0 5px 25px rgba(255,255,255,0.4);
         }
 
+        /* 修改後的深藍色文字 */
         .error-message {
             font-family: 'Playfair Display', serif;
             font-style: italic;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             letter-spacing: 0.2em;
-            opacity: 0.75;
+            opacity: 1;
+            color: var(--janu-blue);
         }
 
-        /* 進場動畫 */
         .fade-up {
             animation: fadeUp 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
@@ -147,7 +138,7 @@
             position: fixed;
             width: 1000px;
             height: 1000px;
-            background: radial-gradient(circle, rgba(197, 164, 126, 0.06) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(0, 49, 83, 0.04) 0%, transparent 70%);
             pointer-events: none;
             z-index: 2;
             transform: translate(-50%, -50%);
@@ -158,51 +149,25 @@
 
     <div id="glow"></div>
 
-    <!-- 背景層次區 -->
-    <div class="mural-container">
-        <!-- 遠景樹影 -->
-        <svg class="tree-layer tree-back" viewBox="0 0 800 400" preserveAspectRatio="none">
-            <path d="M0 400 Q150 100 300 400 T600 400 T900 400" fill="currentColor" />
-        </svg>
+    <!-- 背景自然壁畫區 -->
+    <div class="mural-container" id="mural">
+        <div class="tower-line"></div>
         
-        <!-- 中景樹影 -->
-        <svg class="tree-layer tree-mid" viewBox="0 0 800 400" preserveAspectRatio="none">
-            <path d="M-50 400 Q200 180 400 400 T750 400" fill="currentColor" />
-            <circle cx="200" cy="200" r="80" fill="currentColor" />
-            <circle cx="650" cy="250" r="60" fill="currentColor" />
-        </svg>
-
-        <!-- 近景樹影 -->
-        <svg class="tree-layer tree-front" viewBox="0 0 800 400" preserveAspectRatio="none">
-            <path d="M100 400 Q300 250 500 400 T850 400" fill="currentColor" />
-            <circle cx="350" cy="280" r="40" fill="currentColor" />
-        </svg>
-
         <div class="text-center z-10 fade-up px-6">
             <div class="janu-logo">JANU</div>
             <div class="error-message mb-12">404 — 路徑暫失</div>
             
-            <p class="text-[16px] md:text-xl tracking-[0.25em] leading-relaxed max-w-2xl mx-auto opacity-50 font-light uppercase">
+            <p class="text-[16px] md:text-2xl tracking-[0.2em] leading-relaxed max-w-3xl mx-auto opacity-50 font-light uppercase">
                 本網站目前處於維護狀態，相關人員正進行緊急維護，<br class="hidden md:block">
                 將於不久後重新開放，造成您的不變深感抱歉
             </p>
         </div>
     </div>
 
-    <!-- 基座區 -->
+    <!-- 石材基座區 -->
     <div class="stone-pedestal">
-        <div class="bonsai">
-            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M35 85 C35 75 65 75 65 85" stroke="#8C887E" stroke-width="2"/>
-                <path d="M50 80 L50 62 L42 50" stroke="#5C5850" stroke-width="2.5"/>
-                <circle cx="42" cy="45" r="20" fill="#5D6D50" opacity="0.6"/>
-                <circle cx="65" cy="58" r="15" fill="#6D7D60" opacity="0.5"/>
-                <circle cx="52" cy="35" r="14" fill="#4D5D40" opacity="0.7"/>
-            </svg>
-        </div>
-        
-        <div class="mt-14 flex flex-col items-center gap-8">
-            <a href="/" class="px-12 py-3.5 border border-stone-300 text-[11px] tracking-[0.45em] uppercase hover:bg-stone-800 hover:text-white transition-all duration-700 shadow-sm">
+        <div class="flex flex-col items-center gap-10">
+            <a href="/" class="px-14 py-4 border border-stone-300 text-[11px] tracking-[0.5em] uppercase hover:bg-stone-800 hover:text-white transition-all duration-1000 shadow-sm">
                 重返首頁
             </a>
             <button onclick="window.history.back()" class="text-[10px] tracking-[0.4em] opacity-30 hover:opacity-100 transition-opacity">
@@ -212,8 +177,8 @@
     </div>
 
     <!-- 頁尾 -->
-    <footer class="absolute bottom-8 w-full text-center z-20">
-        <p class="text-[10px] tracking-[0.6em] opacity-30 uppercase font-light">
+    <footer class="absolute bottom-10 w-full text-center z-20">
+        <p class="text-[11px] tracking-[0.7em] opacity-30 uppercase font-light">
             Where Life & Soul Align
         </p>
     </footer>
@@ -221,9 +186,9 @@
     <script>
         const glow = document.getElementById('glow');
         const logo = document.querySelector('.janu-logo');
-        const trees = document.querySelectorAll('.tree-layer');
+        const mural = document.getElementById('mural');
 
-        // 綜合互動效果：光暈、視差、Logo 位移
+        // 互動效果：光暈與背景微視差
         document.addEventListener('mousemove', (e) => {
             const x = e.clientX;
             const y = e.clientY;
@@ -237,12 +202,10 @@
             // 2. Logo 微位移
             logo.style.transform = `translate(${(x - centerX) / 80}px, ${(y - centerY) / 80}px)`;
 
-            // 3. 樹影多層視差
-            trees.forEach((tree, index) => {
-                const depth = (index + 1) * 0.02; // 越後層動得越慢
-                const moveX = (x - centerX) * depth;
-                tree.style.transform = `translateX(${moveX}px)`;
-            });
+            // 3. 背景圖片微位移
+            const moveX = (x - centerX) / 120;
+            const moveY = (y - centerY) / 120;
+            mural.style.backgroundPosition = `calc(50% + ${moveX}px) calc(40% + ${moveY}px)`;
         });
 
         // 點擊水波紋效果
@@ -255,11 +218,10 @@
             setTimeout(() => ripple.remove(), 1500);
         });
 
-        // 背景柔和呼吸光影
+        // 呼吸光影效果
         let lightVal = 0.35;
         let grow = true;
         function animateAmbient() {
-            const mural = document.querySelector('.mural-container');
             if (grow) {
                 lightVal += 0.001;
                 if (lightVal >= 0.5) grow = false;
@@ -267,10 +229,7 @@
                 lightVal -= 0.001;
                 if (lightVal <= 0.25) grow = true;
             }
-            mural.style.background = `
-                radial-gradient(circle at 50% 30%, rgba(255, 255, 255, ${lightVal}), transparent 60%),
-                linear-gradient(to bottom, rgba(232, 226, 217, 0.4), var(--janu-bg))
-            `;
+            mural.style.backgroundColor = `rgba(232, 226, 217, ${lightVal})`;
             requestAnimationFrame(animateAmbient);
         }
 
