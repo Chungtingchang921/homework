@@ -9,110 +9,112 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap');
 
         :root {
-            --janu-dark: #0a0907;      /* 石材深色 */
-            --janu-gold: #c5a47e;      /* 燈光暖金 */
-            --janu-mural: #2a241c;     /* 壁畫底色 */
-            --janu-green: #4ade80;     /* 盆栽綠意 */
+            --janu-bg: #F9F7F2;        /* 明亮米色背景 */
+            --janu-text: #2D2926;      /* 深炭灰文字 */
+            --janu-mural-light: #E8E2D9; /* 淺沙色壁畫 */
+            --janu-accent: #C5A47E;    /* 暖金細節 */
         }
 
         body {
-            background-color: var(--janu-dark);
-            color: #ffffff;
+            background-color: var(--janu-bg);
+            color: var(--janu-text);
             font-family: 'Inter', sans-serif;
             margin: 0;
             overflow: hidden;
             height: 100vh;
         }
 
-        /* 模擬照片中的壁畫背光效果 */
+        /* 模擬照片中的壁畫背光效果 - 調整為明亮色調 */
         .mural-container {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 70vh;
-            background: linear-gradient(to bottom, rgba(42, 36, 28, 0.8), rgba(10, 9, 7, 1)),
+            height: 75vh;
+            background: linear-gradient(to bottom, rgba(232, 226, 217, 0.4), var(--janu-bg)),
                         url('https://www.transparenttextures.com/patterns/canvas-orange.png');
-            background-color: var(--janu-mural);
+            background-color: var(--janu-mural-light);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1;
         }
 
-        /* 模擬照片中的樹影 (使用 SVG) */
+        /* 樹影裝飾 - 調整為淺色對比 */
         .tree-silhouette {
             position: absolute;
             width: 100%;
             height: 100%;
-            opacity: 0.15;
-            filter: blur(1px);
+            opacity: 0.1;
+            filter: blur(2px);
             pointer-events: none;
+            color: var(--janu-accent);
         }
 
-        /* 石材基座 (底座) */
+        /* 石材基座 (底座) - 調整為淺灰色調 */
         .stone-pedestal {
             position: absolute;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 60%;
-            height: 25vh;
-            background: #111;
-            clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
-            box-shadow: 0 -20px 50px rgba(0,0,0,0.8);
+            width: 65%;
+            height: 22vh;
+            background: #E0DDD5;
+            clip-path: polygon(8% 0%, 92% 0%, 100% 100%, 0% 100%);
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.05);
             z-index: 3;
             display: flex;
             justify-content: center;
         }
 
-        /* 盆栽圖標 (CSS 繪製) */
+        /* 盆栽圖標 */
         .bonsai {
             position: absolute;
-            top: -60px;
-            width: 80px;
-            height: 80px;
-            transition: transform 0.5s ease;
+            top: -65px;
+            width: 90px;
+            height: 90px;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .bonsai:hover {
-            transform: scale(1.1);
+            transform: scale(1.05) translateY(-5px);
         }
 
         /* 字體樣式 */
         .janu-logo {
-            font-size: clamp(3rem, 10vw, 6rem);
-            letter-spacing: 0.4em;
+            font-size: clamp(3rem, 10vw, 5.5rem);
+            letter-spacing: 0.45em;
             font-weight: 200;
             opacity: 0.9;
-            text-indent: 0.4em;
-            margin-bottom: 1rem;
+            text-indent: 0.45em;
+            margin-bottom: 1.5rem;
+            color: var(--janu-text);
         }
 
         .error-message {
             font-family: 'Playfair Display', serif;
             font-style: italic;
-            font-size: 1.2rem;
-            letter-spacing: 0.1em;
-            opacity: 0.8;
+            font-size: 1.3rem;
+            letter-spacing: 0.15em;
+            opacity: 0.7;
         }
 
         /* 動畫 */
         .fade-up {
-            animation: fadeUp 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            animation: fadeUp 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(40px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 滑鼠發光效果 */
+        /* 明亮環境的微妙發光 */
         #glow {
             position: fixed;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(197, 164, 126, 0.05) 0%, rgba(0,0,0,0) 70%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(197, 164, 126, 0.08) 0%, rgba(249, 247, 242, 0) 70%);
             pointer-events: none;
             z-index: 2;
             transform: translate(-50%, -50%);
@@ -123,96 +125,90 @@
 
     <div id="glow"></div>
 
-    <!-- 背景壁畫區 -->
+    <!-- 背景區 -->
     <div class="mural-container">
-        <!-- 樹木剪影裝飾 -->
+        <!-- 樹木剪影 -->
         <svg class="tree-silhouette" viewBox="0 0 800 400" preserveAspectRatio="none">
-            <path d="M100 400 Q150 200 200 400 T300 400 T450 400 T600 400 T750 400" fill="none" stroke="currentColor" stroke-width="1" />
-            <circle cx="200" cy="150" r="100" fill="currentColor" opacity="0.1"/>
-            <circle cx="600" cy="180" r="120" fill="currentColor" opacity="0.1"/>
+            <path d="M50 400 Q150 150 250 400 T450 400 T650 400" fill="none" stroke="currentColor" stroke-width="0.5" />
+            <circle cx="250" cy="180" r="120" fill="currentColor" opacity="0.05"/>
+            <circle cx="550" cy="220" r="100" fill="currentColor" opacity="0.05"/>
         </svg>
 
         <div class="text-center z-10 fade-up px-6">
             <div class="janu-logo">JANU</div>
-            <div class="error-message mb-8">404 — 寧靜之境，路徑暫失</div>
+            <div class="error-message mb-12">404 — 路徑暫失</div>
             
-            <!-- 新增維護狀態說明文字 -->
-            <p class="text-[10px] md:text-xs tracking-[0.2em] leading-loose max-w-lg mx-auto opacity-40 font-light uppercase">
+            <!-- 放大後的維護狀態說明文字 -->
+            <p class="text-[16px] md:text-xl tracking-[0.2em] leading-relaxed max-w-2xl mx-auto opacity-40 font-light uppercase">
                 本網站目前處於維護狀態，相關人員正進行緊急維護，<br class="hidden md:block">
-                將於不久後重新開放，造成您的不變深感抱歉
+                將於不久後重新開放，造成您的不便深感抱歉
             </p>
         </div>
     </div>
 
-    <!-- 石材基座區 -->
+    <!-- 基座區 -->
     <div class="stone-pedestal">
-        <!-- 盆栽抽象圖形 -->
         <div class="bonsai">
             <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M40 80 C40 70 60 70 60 80" stroke="#333" stroke-width="2"/>
-                <path d="M50 75 L50 60 L40 50" stroke="#333" stroke-width="3"/>
-                <circle cx="40" cy="45" r="15" fill="#2d5a27" opacity="0.8"/>
-                <circle cx="60" cy="55" r="12" fill="#3d7a35" opacity="0.8"/>
-                <circle cx="50" cy="35" r="10" fill="#1e3d1a" opacity="0.8"/>
+                <path d="M35 85 C35 75 65 75 65 85" stroke="#8C887E" stroke-width="1.5"/>
+                <path d="M50 78 L50 65 L42 55" stroke="#5C5850" stroke-width="2"/>
+                <circle cx="42" cy="50" r="18" fill="#5D6D50" opacity="0.6"/>
+                <circle cx="62" cy="60" r="14" fill="#6D7D60" opacity="0.5"/>
+                <circle cx="52" cy="40" r="12" fill="#4D5D40" opacity="0.7"/>
             </svg>
         </div>
         
-        <div class="mt-16 flex flex-col items-center gap-6">
-            <a href="/" class="px-8 py-3 border border-stone-700 text-[10px] tracking-[0.3em] uppercase hover:bg-white hover:text-black transition-all duration-500">
+        <div class="mt-14 flex flex-col items-center gap-8">
+            <a href="/" class="px-12 py-3.5 border border-stone-300 text-[10px] tracking-[0.4em] uppercase hover:bg-stone-800 hover:text-white transition-all duration-700">
                 重返首頁
             </a>
-            <button onclick="window.history.back()" class="text-[10px] tracking-[0.2em] opacity-40 hover:opacity-100 transition-opacity">
-                返回
+            <button onclick="window.history.back()" class="text-[10px] tracking-[0.3em] opacity-30 hover:opacity-100 transition-opacity">
+                BACK
             </button>
         </div>
     </div>
 
-    <!-- 底部資訊 -->
-    <footer class="absolute bottom-6 w-full text-center z-20">
-        <p class="text-[9px] tracking-[0.4em] opacity-30 uppercase font-light">
-            Soulful exploration awaits.
+    <!-- 頁尾 -->
+    <footer class="absolute bottom-8 w-full text-center z-20">
+        <p class="text-[9px] tracking-[0.5em] opacity-30 uppercase font-light">
+            Continuous discovery in every moment.
         </p>
     </footer>
 
     <script>
-        // JavaScript: 處理互動效果
-        
         const glow = document.getElementById('glow');
         const logo = document.querySelector('.janu-logo');
 
         document.addEventListener('mousemove', (e) => {
-            // 1. 光暈跟隨
             const x = e.clientX;
             const y = e.clientY;
             glow.style.left = x + 'px';
             glow.style.top = y + 'px';
 
-            // 2. Logo 微視差效果
-            const moveX = (x - window.innerWidth / 2) / 50;
-            const moveY = (y - window.innerHeight / 2) / 50;
+            const moveX = (x - window.innerWidth / 2) / 80;
+            const moveY = (y - window.innerHeight / 2) / 80;
             logo.style.transform = `translate(${moveX}px, ${moveY}px)`;
         });
 
-        // 模擬光線微動 (Breathing light)
-        let opacity = 0.6;
-        let growing = true;
+        // 模擬溫和的光影脈動
+        let lightVal = 0.4;
+        let grow = true;
         
-        function animateLight() {
+        function animateAmbient() {
             const mural = document.querySelector('.mural-container');
-            if (growing) {
-                opacity += 0.002;
-                if (opacity >= 0.8) growing = false;
+            if (grow) {
+                lightVal += 0.0015;
+                if (lightVal >= 0.55) grow = false;
             } else {
-                opacity -= 0.002;
-                if (opacity <= 0.5) growing = true;
+                lightVal -= 0.0015;
+                if (lightVal <= 0.35) grow = true;
             }
-            mural.style.background = `linear-gradient(to bottom, rgba(42, 36, 28, ${opacity}), rgba(10, 9, 7, 1)), url('https://www.transparenttextures.com/patterns/canvas-orange.png')`;
-            requestAnimationFrame(animateLight);
+            mural.style.background = `linear-gradient(to bottom, rgba(232, 226, 217, ${lightVal}), rgba(249, 247, 242, 1)), url('https://www.transparenttextures.com/patterns/canvas-orange.png')`;
+            requestAnimationFrame(animateAmbient);
         }
 
         window.onload = () => {
-            animateLight();
-            console.log("Janu: 空間美學已加載。");
+            animateAmbient();
         };
     </script>
 </body>
