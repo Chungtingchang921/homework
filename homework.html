@@ -22,9 +22,10 @@
             margin: 0;
             overflow: hidden;
             height: 100vh;
+            user-select: none; /* 避免文字選取干擾視覺 */
         }
 
-        /* 模擬照片中的壁畫背光效果 - 調整為明亮色調 */
+        /* 模擬照片中的壁畫背光效果 */
         .mural-container {
             position: absolute;
             top: 0;
@@ -40,7 +41,7 @@
             z-index: 1;
         }
 
-        /* 樹影裝飾 - 調整為淺色對比 */
+        /* 樹影裝飾 */
         .tree-silhouette {
             position: absolute;
             width: 100%;
@@ -51,7 +52,7 @@
             color: var(--janu-accent);
         }
 
-        /* 石材基座 (底座) - 調整為淺灰色調 */
+        /* 石材基座 */
         .stone-pedestal {
             position: absolute;
             bottom: 0;
@@ -76,8 +77,29 @@
             transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        .bonsai:hover {
-            transform: scale(1.05) translateY(-5px);
+        /* 水波紋樣式 */
+        .ripple-effect {
+            position: fixed;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            background-color: var(--janu-accent);
+            opacity: 0.3;
+            z-index: 5;
+            animation: ripple-animation 1.2s cubic-bezier(0, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes ripple-animation {
+            from {
+                width: 0px;
+                height: 0px;
+                opacity: 0.4;
+            }
+            to {
+                width: 300px;
+                height: 300px;
+                opacity: 0;
+            }
         }
 
         /* 字體樣式 */
@@ -109,7 +131,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 明亮環境的微妙發光 */
         #glow {
             position: fixed;
             width: 800px;
@@ -138,7 +159,6 @@
             <div class="janu-logo">JANU</div>
             <div class="error-message mb-12">404 — 路徑暫失</div>
             
-            <!-- 放大後的維護狀態說明文字 -->
             <p class="text-[16px] md:text-xl tracking-[0.2em] leading-relaxed max-w-2xl mx-auto opacity-40 font-light uppercase">
                 本網站目前處於維護狀態，相關人員正進行緊急維護，<br class="hidden md:block">
                 將於不久後重新開放，造成您的不便深感抱歉
@@ -168,10 +188,10 @@
         </div>
     </div>
 
-    <!-- 頁尾 -->
+    <!-- 頁尾：已更新標語 -->
     <footer class="absolute bottom-8 w-full text-center z-20">
         <p class="text-[9px] tracking-[0.5em] opacity-30 uppercase font-light">
-            Continuous discovery in every moment.
+            Where Life & Soul Align
         </p>
     </footer>
 
@@ -179,6 +199,7 @@
         const glow = document.getElementById('glow');
         const logo = document.querySelector('.janu-logo');
 
+        // 滑鼠移動光暈效果
         document.addEventListener('mousemove', (e) => {
             const x = e.clientX;
             const y = e.clientY;
@@ -188,6 +209,21 @@
             const moveX = (x - window.innerWidth / 2) / 80;
             const moveY = (y - window.innerHeight / 2) / 80;
             logo.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+
+        // 點擊水波紋效果
+        document.addEventListener('click', (e) => {
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple-effect';
+            ripple.style.left = `${e.clientX}px`;
+            ripple.style.top = `${e.clientY}px`;
+            
+            document.body.appendChild(ripple);
+            
+            // 動畫結束後移除元素
+            setTimeout(() => {
+                ripple.remove();
+            }, 1200);
         });
 
         // 模擬溫和的光影脈動
